@@ -103,13 +103,8 @@ function file_get_html(
 		$defaultSpanText
 	);
 
-	$contents = file_get_contents(
-		$url,
-		$use_include_path,
-		$context,
-		$offset,
-		$maxLen + 1 // Load extra byte for limit check
-	);
+	$contents = file_get_contents( $url, $use_include_path, stream_context_create( array( 'ssl' => array( 'verify_peer' => false, 'verify_peer_name' => false ) ) ) );
+
 
 	if (empty($contents) || strlen($contents) > $maxLen) {
 		$dom->clear();
