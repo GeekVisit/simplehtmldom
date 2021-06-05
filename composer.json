@@ -2,12 +2,7 @@
     "name": "simplehtmldom/simplehtmldom",
     "description": "A fast, simple and reliable HTML document parser for PHP.",
     "keywords": [
-        "php",
-        "html",
-        "dom",
-        "parser",
-        "simple",
-        "simplehtmldom"
+        "html", "dom", "parser", "simple", "simplehtmldom"
     ],
     "homepage": "https://simplehtmldom.sourceforge.io/",
     "license": "MIT",
