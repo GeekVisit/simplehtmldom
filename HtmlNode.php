@@ -297,8 +297,8 @@ class HtmlNode
      */
     public function clear()
     {
-        // Break link to origin & branch
-        unset($this->dom, $this->parent);
+        $this->dom = null;
+        $this->parent = null;
     }
 
     /**
@@ -321,7 +321,7 @@ class HtmlNode
 
         echo "\n";
 
-        if ($this->nodes) {
+        if (! empty($this->nodes)) {
             foreach ($this->nodes as $node) {
                 $node->dump($show_attr, $depth + 1);
             }
@@ -475,7 +475,7 @@ class HtmlNode
             $ret .= $this->_[self::HDOM_INFO_INNER];
         }
 
-        if ($this->nodes) {
+        if (! empty($this->nodes)) {
             foreach ($this->nodes as $n) {
                 $ret .= $n->outertext();
             }
@@ -531,34 +531,32 @@ class HtmlNode
             $ret = $this->_[self::HDOM_INFO_TEXT];
         }
 
-        if ($this->nodes === null) {
-            return '';
-        }
+        if (! empty($this->nodes)) {
+            foreach ($this->nodes as $n) {
+                if ($this->is_block_element($n)) {
+                    $block = ltrim($this->convert_text($n->text(false)));
 
-        foreach ($this->nodes as $n) {
-            if ($this->is_block_element($n)) {
-                $block = ltrim($this->convert_text($n->text(false)));
-
-                if (empty($block)) {
-                    continue;
-                }
-
-                $ret = rtrim($ret) . "\n\n" . $block;
-            } elseif ($this->is_inline_element($n)) {
-                // todo: <br> introduces code smell because no space but \n
-                if (strtolower($n->tag) === 'br') {
-                    $ret .= $this->dom->default_br_text ?: DEFAULT_BR_TEXT;
-                } else {
-                    $inline = ltrim($this->convert_text($n->text(false)));
-
-                    if (empty($inline)) {
+                    if (empty($block)) {
                         continue;
                     }
 
+                    $ret = rtrim($ret) . "\n\n" . $block;
+                } elseif ($this->is_inline_element($n)) {
+                    // todo: <br> introduces code smell because no space but \n
+                    if (strtolower($n->tag) === 'br') {
+                        $ret .= $this->dom->default_br_text ?: DEFAULT_BR_TEXT;
+                    } else {
+                        $inline = ltrim($this->convert_text($n->text(false)));
+
+                        if (empty($inline)) {
+                            continue;
+                        }
+
+                        $ret .= $this->convert_text($n->text(false));
+                    }
+                } else {
                     $ret .= $this->convert_text($n->text(false));
                 }
-            } else {
-                $ret .= $this->convert_text($n->text(false));
             }
         }
 
@@ -1537,7 +1535,7 @@ class HtmlNode
      */
     public function hasAttribute($name)
     {
-        return isset($this->{$name});
+        return isset($this->attr[$name]);
     }
 
     /**
@@ -1545,7 +1543,7 @@ class HtmlNode
      */
     public function removeAttribute($name)
     {
-        unset($this->{$name});
+        unset($this->attr[$name]);
     }
 
     /**
@@ -1553,7 +1551,7 @@ class HtmlNode
      */
     public function remove()
     {
-        if ($this->parent) {
+        if (! empty($this->parent)) {
             $this->parent->removeChild($this);
         }
     }
