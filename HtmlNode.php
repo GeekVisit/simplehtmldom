@@ -369,6 +369,8 @@ class HtmlNode
 		}
 
 		foreach ($this->nodes as $n) {
+			$ret .= $this->convert_text($n->text(false));
+			continue;
 			if ($this->is_block_element($n)) {
 
 				$block = ltrim($this->convert_text($n->text(false)));
@@ -396,8 +398,8 @@ class HtmlNode
 		}
 
 		// Reduce whitespace at start/end to a single (or none) space
-		$ret = preg_replace('/[ \t\n\r\0\x0B\xC2\xA0]+$/u', $trim ? '' : ' ', $ret);
-		$ret = preg_replace('/^[ \t\n\r\0\x0B\xC2\xA0]+/u', $trim ? '' : ' ', $ret);
+		// $ret = preg_replace('/[ \t\n\r\0\x0B\xC2\xA0]+$/u', $trim ? '' : ' ', $ret);
+		// $ret = preg_replace('/^[ \t\n\r\0\x0B\xC2\xA0]+/u', $trim ? '' : ' ', $ret);
 
 		return $ret;
 	}

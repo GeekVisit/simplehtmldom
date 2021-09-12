@@ -122,7 +122,7 @@ class HtmlDocument
 		$lowercase = true,
 		$forceTagsClosed = true,
 		$target_charset = DEFAULT_TARGET_CHARSET,
-		$stripRN = true,
+		$stripRN = false,
 		$defaultBRText = DEFAULT_BR_TEXT,
 		$defaultSpanText = DEFAULT_SPAN_TEXT,
 		$options = 0)
@@ -175,7 +175,7 @@ class HtmlDocument
 	function load(
 		$str,
 		$lowercase = true,
-		$stripRN = true,
+		$stripRN = false,
 		$defaultBRText = DEFAULT_BR_TEXT,
 		$defaultSpanText = DEFAULT_SPAN_TEXT,
 		$options = 0)
