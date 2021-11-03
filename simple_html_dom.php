@@ -120,47 +120,39 @@ class_alias(HtmlNode::class, 'simple_html_dom_node');
  * @return false|simple_html_dom
  */
 function file_get_html(
-    $url,
-    $use_include_path = false,
-    $context = null,
-    $offset = 0,
-    $maxLen = -1,
-    $lowercase = true,
-    $forceTagsClosed = true,
-    $target_charset = DEFAULT_TARGET_CHARSET,
-    $stripRN = true,
-    $defaultBRText = DEFAULT_BR_TEXT,
-    $defaultSpanText = DEFAULT_SPAN_TEXT
-) {
-    if ($maxLen <= 0) {
-        $maxLen = MAX_FILE_SIZE;
-    }
+	$url,
+	$use_include_path = false,
+	$context = null,
+	$offset = 0,
+	$maxLen = -1,
+	$lowercase = true,
+	$forceTagsClosed = true,
+	$target_charset = DEFAULT_TARGET_CHARSET,
+	$stripRN = true,
+	$defaultBRText = DEFAULT_BR_TEXT,
+	$defaultSpanText = DEFAULT_SPAN_TEXT)
+{
+	if($maxLen <= 0) { $maxLen = MAX_FILE_SIZE; }
 
-    $dom = new simple_html_dom(
-        null,
-        $lowercase,
-        $forceTagsClosed,
-        $target_charset,
-        $stripRN,
-        $defaultBRText,
-        $defaultSpanText
-    );
+	$dom = new simple_html_dom(
+		null,
+		$lowercase,
+		$forceTagsClosed,
+		$target_charset,
+		$stripRN,
+		$defaultBRText,
+		$defaultSpanText
+	);
 
-    $contents = file_get_contents(
-        $url,
-        $use_include_path,
-        $context,
-        $offset,
-        $maxLen + 1 // Load extra byte for limit check
-    );
+	$contents = file_get_contents( $url, $use_include_path, stream_context_create( array( 'ssl' => array( 'verify_peer' => false, 'verify_peer_name' => false ) ) ) );
 
-    if (empty($contents) || strlen($contents) > $maxLen) {
-        $dom->clear();
 
-        return false;
-    }
+	if (empty($contents) || strlen($contents) > $maxLen) {
+		$dom->clear();
+		return false;
+	}
 
-    return $dom->load($contents, $lowercase, $stripRN);
+	return $dom->load($contents, $lowercase, $stripRN);
 }
 
 /**
