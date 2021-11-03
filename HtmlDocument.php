@@ -181,7 +181,7 @@ class HtmlDocument
 		$options = 0)
 	{
 		if ($str) {
-			if (preg_match('/^http:\/\//i', $str) || is_file($str)) {
+			if (preg_match('/^http:\/\//i', $str)) {
 				$this->load_file($str);
 			} else {
 				$this->load(
