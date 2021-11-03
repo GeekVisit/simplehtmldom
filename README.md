@@ -7,7 +7,7 @@
 
 simplehtmldom is a fast and reliable HTML DOM parser for PHP.
 
-#GeekVisit NOTE: As of 11-3-2021 in an attempt to update an apparently abandoned code base, I incorporated all commits from forks of [simplehtmldom/simplehtmlcom](https://github.com/simplehtmldom/simplehtmldom) as found on  https://github.com/simplehtmldom/simplehtmldom/network/members which were ahead of master branch.  Given my ignorance of the code, no attempt was made to verify correctness of changes but all code changes can be reviewed by looking at [merged pull requests in Insights](https://github.com/GeekVisit/simplehtmldom/pulse#merged-pull-requests).
+# GeekVisit NOTE: As of 11-3-2021 in an attempt to update an apparently abandoned code base, I incorporated all commits from forks of [simplehtmldom/simplehtmlcom](https://github.com/simplehtmldom/simplehtmldom) as found on  https://github.com/simplehtmldom/simplehtmldom/network/members which were ahead of master branch.  Given my ignorance of the code, no attempt was made to verify correctness of changes but all code changes can be reviewed by looking at [merged pull requests in Insights](https://github.com/GeekVisit/simplehtmldom/pulse#merged-pull-requests).
 
 ## Key features
 
